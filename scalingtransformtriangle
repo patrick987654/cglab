@@ -1,0 +1,28 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Define the vertices of the triangle
+triangle = np.array([[50, 100], [50, 200], [100, 100],[50,100]])
+
+# Define the scaling factor for x and y
+sx = 2
+sy = 2
+
+# Define the scaling matrix
+scaling_matrix = np.array([[sx, 0], [0, sy]])
+
+# Apply the scaling transformation to the triangle
+scaled_triangle = triangle.dot(scaling_matrix)
+
+# Plot the original and scaled triangles
+plt.subplot(121)
+plt.title('Original Triangle')
+plt.plot(triangle[:,0], triangle[:,1], 'b')
+plt.axis('equal')
+
+plt.subplot(122)
+plt.title('Scaled Triangle')
+plt.plot(scaled_triangle[:,0], scaled_triangle[:,1], 'r')
+plt.axis('equal')
+
+plt.show()
