@@ -1,0 +1,27 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Define the vertices of the square
+square = np.array([[50, 100], [50, 200], [150, 200], [150, 100],[50,100]])
+
+# Define the shearing factor along the y-axis
+shy = 3
+
+# Define the shearing matrix
+shearing_matrix = np.array([[1, 0], [shy, 1]])
+
+# Apply the shearing transformation to the square
+sheared_square = square.dot(shearing_matrix)
+
+# Plot the original and sheared squares
+plt.subplot(121)
+plt.title('Original Square')
+plt.plot(square[:,0], square[:,1], 'b')
+plt.axis('equal')
+
+plt.subplot(122)
+plt.title('Sheared Square')
+plt.plot(sheared_square[:,0], sheared_square[:,1], 'r')
+plt.axis('equal')
+
+plt.show()
