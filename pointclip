@@ -42,3 +42,13 @@ def pointClip(points, n, xmin, ymin, xmax, ymax):
         elif ((points[i][1] < ymin) or (points[i][1] > ymax)) :
             print("[", points[i][0], ", ", points[i][1],"]", sep = "", end = " ")
             plt.scatter(points[i][0], points[i][1], color='green')
+            
+if __name__=='__main__':
+    x = [xmin, xmax, xmax, xmin, xmin]
+    y = [ymin, ymin, ymax, ymax, ymin]
+    
+    pointClip(points, n, xmin, ymin, xmax, ymax)
+    print("\n\nEnter x1 and y1 : ")
+    x1, y1 = map(int, input().split())
+    print("Enter x2 and y2 : ")
+    x2, y2 = map(int, input().split())
