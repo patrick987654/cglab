@@ -1,0 +1,105 @@
+import matplotlib.pyplot as plt
+
+INSIDE = 0 # 0000
+LEFT = 1 # 0001
+RIGHT = 2 # 0010
+BOTTOM = 4 # 0100
+TOP = 8	 # 1000
+
+print("Enter number of points : ")
+n = int(input())
+points = []
+print("Enter points : ")
+for i in range(n):
+    x, y = map(int, input().split())
+    points.append([x, y])
+    plt.scatter(x, y)
+
+print("\n\nEnter Xmin : ")
+xmin = int(int(input()))
+print("Enter Xmax : ")
+xmax = int(int(input()))
+print("Enter Ymin : ")
+ymin = int(int(input()))
+print("Enter Ymax : ")
+ymax = int(int(input()))
+
+def computeCode(x, y):
+    code = INSIDE
+    if x < xmin:
+        code |= LEFT
+    elif x > xmax: 
+        code |= RIGHT
+    if y < ymin:
+        code |= BOTTOM
+    elif y > ymax: 
+        code |= TOP
+
+    return code
+
+def cohenSutherlandClip(x1, y1, x2, y2):
+    code1 = computeCode(x1, y1)
+    code2 = computeCode(x2, y2)
+    accept = False
+
+    while True:
+
+        if code1 == 0 and code2 == 0:
+            accept = True
+            break
+
+        elif (code1 & code2) != 0:
+            break
+
+        else:
+            x = 1.0
+            y = 1.0
+            if code1 != 0:
+                code_out = code1
+            else:
+                code_out = code2
+
+            if code_out & TOP:
+                x = x1 + (x2 - x1) * (ymax - y1) / (y2 - y1)
+                y = ymax
+
+            elif code_out & BOTTOM:
+                x = x1 + (x2 - x1) *  (ymin - y1) / (y2 - y1)
+                y = ymin
+
+            elif code_out & RIGHT:
+                y = y1 + (y2 - y1) *  (xmax - x1) / (x2 - x1)
+                x = xmax
+
+            elif code_out & LEFT:
+                y = y1 + (y2 - y1) *  (xmin - x1) / (x2 - x1)
+                x = xmin
+
+            if code_out == code1:
+                x1 = x
+                y1 = y
+                code1 = computeCode(x1, y1)
+
+            else:
+                x2 = x
+                y2 = y
+                code2 = computeCode(x2, y2)
+
+    if accept:
+        print ("\n\nLine accepted from %.2f, %.2f to %.2f, %.2f" % (x1, y1, x2, y2))
+        plt.scatter(x1, y1, color="black")
+        plt.scatter(x2, y2, color="black")
+    else:
+        print("Line rejected")    
+           
+if __name__=='__main__':
+    x = [xmin, xmax, xmax, xmin, xmin]
+    y = [ymin, ymin, ymax, ymax, ymin]
+    
+    cohenSutherlandClip(x1, y1, x2, y2)
+    a = [x1, x2]
+    b = [y1, y2]
+    
+    plt.plot(x, y)
+    plt.plot(a, b, color="orange")
+    plt.show()
