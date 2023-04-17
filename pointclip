@@ -1,0 +1,44 @@
+import matplotlib.pyplot as plt
+
+INSIDE = 0 # 0000
+LEFT = 1 # 0001
+RIGHT = 2 # 0010
+BOTTOM = 4 # 0100
+TOP = 8	 # 1000
+
+print("Enter number of points : ")
+n = int(input())
+points = []
+print("Enter points : ")
+for i in range(n):
+    x, y = map(int, input().split())
+    points.append([x, y])
+    plt.scatter(x, y)
+
+print("\n\nEnter Xmin : ")
+xmin = int(int(input()))
+print("Enter Xmax : ")
+xmax = int(int(input()))
+print("Enter Ymin : ")
+ymin = int(int(input()))
+print("Enter Ymax : ")
+ymax = int(int(input()))
+
+def pointClip(points, n, xmin, ymin, xmax, ymax):
+    print("\n\nPoint inside the viewing pane:")
+    for i in range(n):
+        if ((points[i][0] >= xmin) and
+            (points[i][0] <= xmax)):
+            if ((points[i][1] >= ymin) and
+                (points[i][1] <= ymax)):
+                print("[", points[i][0], ", ", points[i][1],"]", sep = "", end = " ")
+                plt.scatter(points[i][0], points[i][1], color='red')
+                
+    print("\n\nPoint outside the viewing pane:")
+    for i in range(n):
+        if ((points[i][0] < xmin) or (points[i][0] > xmax)) :
+            print("[", points[i][0], ", ", points[i][1],"]", sep = "", end = " ")
+            plt.scatter(points[i][0], points[i][1], color='green')
+        elif ((points[i][1] < ymin) or (points[i][1] > ymax)) :
+            print("[", points[i][0], ", ", points[i][1],"]", sep = "", end = " ")
+            plt.scatter(points[i][0], points[i][1], color='green')
