@@ -52,3 +52,7 @@ if __name__=='__main__':
     x1, y1 = map(int, input().split())
     print("Enter x2 and y2 : ")
     x2, y2 = map(int, input().split())
+
+    plt.plot(x, y)
+    plt.plot(a, b, color="orange")
+    plt.show()
