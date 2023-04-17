@@ -1,0 +1,91 @@
+import matplotlib.pyplot as plt
+
+def line(x1, y1, x2, y2):
+  c = [x1, x2]
+  d = [y1, y2]
+  return c, d
+
+print("Enter X1 and Y1 : ")
+x1, y1 = map(int, input().split())
+
+print("Enter X2 and Y2 : ")
+x2, y2 = map(int, input().split())
+
+print("\nEnter Xmin : ")
+xmin = int(int(input()))
+print("Enter Xmax : ")
+xmax = int(int(input()))
+print("Enter Ymin : ")
+ymin = int(int(input()))
+print("Enter Ymax : ")
+ymax = int(int(input()))
+
+dx, dy = x2 - x1, y2 - y1;
+
+p, q = [0, 0, 0, 0], [0, 0, 0, 0]
+
+p[0] = -dx;
+p[1] = dx;
+p[2] = -dy;
+p[3] = dy;
+
+q[0] = x1 - xmin;
+q[1] = xmax - x1;
+q[2] = y1 - ymin;
+q[3] = ymax - y1;
+
+x = [xmin, xmax, xmax, xmin, xmin]
+y = [ymin, ymin, ymax, ymax, ymin]
+
+a = [x1, x2]
+b = [y1, y2]
+c, d = [], []
+
+for i in range(4):
+  if p[i] == 0:
+    print("Line is parallel to one of the boundary")
+    if q[i] >= 0:
+      if i < 2:
+        if y1 < ymin:
+          y1 = ymin
+      
+        if y2 > ymax:
+          y2 = ymax
+
+      c, d = line(x1, y1, x2, y2)
+
+    if i > 1:
+      if x1 < xmin:
+        x1 = xmin
+      if x2 > xmax:
+        x2 = xmax
+      
+      c, d = line(x1, y1, x2, y2)
+
+t1 = 0
+t2 = 1
+
+for i in range(4):
+  temp = q[i] / p[i]
+  if p[i] < 0:
+    if t1 <= temp:
+      t1 = temp
+
+  else:
+    if t2 > temp:
+      t2 = temp
+
+if t1 < t2:
+  xx1 = x1 + t1 * p[1]
+  xx2 = x1 + t2 * p[1]
+  yy1 = y1 + t1 * p[3]
+  yy2 = y1 + t2 * p[3]
+  c, d = line(xx1, yy1, xx2, yy2)
+
+plt.plot(x, y)
+plt.plot(a, b, color="orange", label="original line")
+plt.plot(c, d, color="black", label="clipped line")
+plt.scatter(c[0], d[0], color='black')
+plt.scatter(c[1], d[1], color='black')
+plt.legend()
+plt.show()
