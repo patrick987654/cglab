@@ -1,0 +1,34 @@
+import matplotlib.pyplot as plt
+
+def Octant_Plot(xc,yc,x,y):
+    plt.scatter(x+xc,y+yc, color='blue');  
+    plt.scatter(x+xc,-y+yc,color='red');  
+    plt.scatter(-x+xc,-y+yc, color='cyan');  
+    plt.scatter(-x+xc,y+yc, color='hotpink');  
+    plt.scatter(y+xc,x+yc, color='black');  
+    plt.scatter(y+xc,-x+yc, color='orange');  
+    plt.scatter(-y+xc,-x+yc,color='purple');  
+    plt.scatter(-y+xc,x+yc, color='gray'); 
+
+def Bersenham_Circle_Drawing(xc, yc, r):
+    x, y, pk = 0, r, 3 - (2 * r)
+    Octant_Plot(xc,yc,x,y)
+    while x <= y:
+        if pk <= 0: 
+            pk = pk + (4*x) + 6;   
+        else : 
+            pk = pk + (4*x) - (4*y) + 10;  
+            y = y - 1;    
+        x = x + 1;  
+        Octant_Plot(xc,yc,x,y)
+
+
+print("Enter center of circle : ")
+xc, yc = map(int, input().split())
+print("Enter radius of circle : ")
+r = int(input())
+plt.scatter(xc, yc)
+
+Bersenham_Circle_Drawing(xc, yc, r)
+
+plt.axis('scaled')
