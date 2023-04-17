@@ -1,0 +1,27 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Define the vertices of the triangle
+triangle = np.array([[50, 100], [50, 200], [100, 100],[50,100]])
+
+# Define the rotation angle in degrees
+theta = np.pi/2  # 90 degrees in radians
+
+# Define the rotation matrix
+rotation_matrix = np.array([[np.cos(theta), -np.sin(theta)], [np.sin(theta), np.cos(theta)]])
+
+# Apply the rotation transformation to the triangle
+rotated_triangle = triangle.dot(rotation_matrix)
+
+# Plot the original and rotated triangles
+plt.subplot(121)
+plt.title('Original Triangle')
+plt.plot(triangle[:,0], triangle[:,1], 'b')
+plt.axis('equal')
+
+plt.subplot(122)
+plt.title('Rotated Triangle')
+plt.plot(rotated_triangle[:,0], rotated_triangle[:,1], 'r')
+plt.axis('equal')
+
+plt.show()
